@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Title>TilesMath</Title>
+    <Authors>ANYWAYS BV</Authors>
+    <Description>A tiny library for tiles math.</Description>
+    <PackageProjectUrl>https://github.com/anyways-open/tiles-math</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/anyways-open/tiles-math/blob/main/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/anyways-open/tiles-math</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>tiles</PackageTags>
+  </PropertyGroup>
+
+</Project>
