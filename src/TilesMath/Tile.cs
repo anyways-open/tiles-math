@@ -55,6 +55,52 @@ public readonly struct Tile
     public TileNeighbours Neighbours => new TileNeighbours(this);
 
     /// <summary>
+    /// The parent tile, if any.
+    /// </summary>
+    public Tile? Parent
+    {
+        get
+        {
+            if (this.Zoom == 0) return null;
+
+            return Tile.Create(this.X / 2, this.Y / 2, this.Zoom - 1);
+        }
+    }
+
+    /// <summary>
+    /// The children.
+    /// </summary>
+    public TileChildren Children => new TileChildren(this);
+
+    public IEnumerable<Tile> ChildrenAtZoom(int zoom)
+    {
+        if (zoom < this.Zoom) throw new Exception("Cannot calculate sub tiles for a smaller zoom level");
+
+        if (zoom == this.Zoom)
+        {
+            yield return this;
+            yield break;
+        }
+
+        if (zoom - 1 == this.Zoom)
+        {
+            foreach (var child in this.Children)
+            {
+                yield return child;
+            }
+            yield break;
+        }
+
+        foreach (var childOneLevelLess in this.ChildrenAtZoom(zoom - 1))
+        {
+            foreach (var child in childOneLevelLess.Children)
+            {
+                yield return child;
+            }
+        }
+    }
+
+    /// <summary>
     /// Creates a new tile from x-y coordinate and zoom level.
     /// </summary>
     /// <param name="x"></param>
