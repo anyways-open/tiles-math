@@ -84,6 +84,6 @@ public class TileNeighbours : IEnumerable<Tile>
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return GetEnumerator();
+        return this.GetEnumerator();
     }
 }

@@ -26,6 +26,6 @@ public struct TileChildren : IEnumerable<Tile>
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return GetEnumerator();
+        return this.GetEnumerator();
     }
 }
