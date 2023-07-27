@@ -162,6 +162,22 @@ public readonly struct Tile
     }
 
     /// <summary>
+    /// Creates the tile at the given WGS84 coordinates and zoom level.
+    /// </summary>
+    /// <param name="longitude">The longitude.</param>
+    /// <param name="latitude">The latitude.</param>
+    /// <param name="zoom">The zoom-level.</param>
+    /// <returns>The tile at the given location and zoom level.</returns>
+    public static Tile? TryAtLocation(double longitude, double latitude, int zoom)
+    {
+        var result = TileGeo.TryForLocation(longitude, latitude, zoom);
+        if (result == null) return null;
+
+        var (x, y) = result.Value;
+        return new Tile(x, y, (byte)zoom);
+    }
+
+    /// <summary>
     /// Creates an empty tile.
     /// </summary>
     public static Tile Empty = new Tile(-1, -1, 0);
