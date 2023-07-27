@@ -51,7 +51,7 @@ internal static class GlobalTileId
         var tileId = ForZoom(zoom - 1) + xMax;
         return tileId;
     }
-    
+
     internal static (int x, int y, int zoom) From(long globalTileId)
     {
         // find out the zoom level first.

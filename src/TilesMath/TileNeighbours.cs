@@ -12,11 +12,11 @@ public class TileNeighbours : IEnumerable<Tile>
     private readonly int _right;
     private readonly int? _top;
     private readonly int? _bottom;
-    
+
     internal TileNeighbours(Tile tile)
     {
         _tile = tile;
-        
+
         var last = (1 << _tile.Zoom) - 1;
         _left = tile.X == 0 ? last : tile.X - 1;
         _right = tile.X == last ? 0 : tile.X + 1;
@@ -43,12 +43,12 @@ public class TileNeighbours : IEnumerable<Tile>
     /// Gets the top neighbour.
     /// </summary>
     public Tile? Top => _top == null ? null : Tile.Create(_tile.X, _top.Value, _tile.Zoom);
-    
+
     /// <summary>
     /// Gets the top left neighbour.
     /// </summary>
     public Tile? TopLeft => _top == null ? null : Tile.Create(_left, _top.Value, _tile.Zoom);
-    
+
     /// <summary>
     /// Gets the top right neighbour.
     /// </summary>

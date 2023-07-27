@@ -7,7 +7,7 @@ public struct TileChildren : IEnumerable<Tile>
     private readonly int _x;
     private readonly int _y;
     private readonly int _z;
-    
+
     internal TileChildren(Tile tile)
     {
         _x = tile.X * 2;

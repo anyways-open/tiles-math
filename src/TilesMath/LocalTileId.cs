@@ -17,7 +17,7 @@ internal static class LocalTileId
 
         return xMax * xMax;
     }
-    
+
     internal static int ForTile(Tile tile)
     {
         var xMax = 1 << (int)tile.Zoom;

@@ -48,7 +48,7 @@ public readonly struct Tile
     /// The tile boundaries.
     /// </summary>
     public TileBounds Boundaries => TileGeo.BoundariesFor(this);
-    
+
     /// <summary>
     /// The neighbours.
     /// </summary>
