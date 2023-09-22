@@ -87,7 +87,7 @@ public static class TileExtensions
 
         var a = (point2.latitude - point1.latitude) / (point2.longitude - point1.longitude);
         var b = 0.0;
-        
+
         var isMoreVertical = a > 0.5;
         if (isMoreVertical)
         {
