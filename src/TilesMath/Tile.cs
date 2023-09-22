@@ -5,7 +5,7 @@ namespace TilesMath;
 /// <summary>
 /// Represents a tile.
 /// </summary>
-public readonly struct Tile
+public readonly partial struct Tile
 {
     private Tile(int x, int y, byte zoom)
     {
@@ -100,85 +100,38 @@ public readonly struct Tile
         }
     }
 
-    /// <summary>
-    /// Creates a new tile from x-y coordinate and zoom level.
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <param name="zoom"></param>
-    /// <returns></returns>
-    public static Tile Create(int x, int y, int zoom)
+    public bool Equals(Tile other)
     {
-        return new Tile(x, y, (byte)zoom);
+        return this.X == other.X && this.Y == other.Y && this.Zoom == other.Zoom;
     }
 
-    /// <summary>
-    /// Creates a new tile from its global id.
-    /// </summary>
-    /// <param name="globalId">The global id.</param>
-    /// <returns>The tile equivalent to the global id.</returns>
-    public static Tile FromGlobalId(long globalId)
+    public override bool Equals(object? obj)
     {
-        var (x, y, z) = GlobalTileId.From(globalId);
-
-        return new Tile(x, y, (byte)z);
+        return obj is Tile other && this.Equals(other);
     }
 
-    /// <summary>
-    /// Creates a new tile from its local id.
-    /// </summary>
-    /// <param name="localId">The local id.</param>
-    /// <param name="zoom"></param>
-    /// <returns>The tile equivalent to for the local id at the given zoom level.</returns>
-    public static Tile FromLocalId(int localId, int zoom)
+    public override int GetHashCode()
     {
-        var (x, y) = LocalTileId.From(localId, zoom);
-
-        return new Tile(x, y, (byte)zoom);
+        return HashCode.Combine(this.X, this.Y, this.Zoom);
     }
 
-    /// <summary>
-    /// Calculates the maximum local id for the given zoom level.
-    /// </summary>
-    /// <param name="zoom">The zoom level.</param>
-    /// <returns>The maximum local id for the given zoom level</returns>
-    public static int MaxLocalId(int zoom)
+    public static bool operator ==(Tile left, Tile right)
     {
-        return LocalTileId.Max(zoom);
+        return left.Equals(right);
     }
 
-    /// <summary>
-    /// Creates the tile at the given WGS84 coordinates and zoom level.
-    /// </summary>
-    /// <param name="longitude">The longitude.</param>
-    /// <param name="latitude">The latitude.</param>
-    /// <param name="zoom">The zoom-level.</param>
-    /// <returns>The tile at the given location and zoom level.</returns>
-    public static Tile AtLocation(double longitude, double latitude, int zoom)
+    public static bool operator !=(Tile left, Tile right)
     {
-        var (x, y) = TileGeo.ForLocation(longitude, latitude, zoom);
-
-        return new Tile(x, y, (byte)zoom);
-    }
-
-    /// <summary>
-    /// Creates the tile at the given WGS84 coordinates and zoom level.
-    /// </summary>
-    /// <param name="longitude">The longitude.</param>
-    /// <param name="latitude">The latitude.</param>
-    /// <param name="zoom">The zoom-level.</param>
-    /// <returns>The tile at the given location and zoom level.</returns>
-    public static Tile? TryAtLocation(double longitude, double latitude, int zoom)
-    {
-        var result = TileGeo.TryForLocation(longitude, latitude, zoom);
-        if (result == null) return null;
-
-        var (x, y) = result.Value;
-        return new Tile(x, y, (byte)zoom);
+        return !(left == right);
     }
 
     /// <summary>
     /// Creates an empty tile.
     /// </summary>
     public static Tile Empty = new Tile(-1, -1, 0);
+
+    public override string ToString()
+    {
+        return $"{nameof(this.X)}: {this.X}, {nameof(this.Y)}: {this.Y}, {nameof(this.Zoom)}: {this.Zoom}, {nameof(this.LocalId)}: {this.LocalId}, {nameof(this.GlobalId)}: {this.GlobalId}";
+    }
 }

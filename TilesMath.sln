@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{70F90716-4
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7F819ADD-9958-44B5-AA0E-1812BB9C90C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TilesMath.Tests", "test\TilesMath.Tests\TilesMath.Tests.csproj", "{7FDDFC0D-2970-48E1-9EF5-0879EE73F6AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +30,13 @@ Global
 		{0D1D5A4A-C7E1-4B92-87DA-E5FC8F544904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D1D5A4A-C7E1-4B92-87DA-E5FC8F544904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D1D5A4A-C7E1-4B92-87DA-E5FC8F544904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FDDFC0D-2970-48E1-9EF5-0879EE73F6AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FDDFC0D-2970-48E1-9EF5-0879EE73F6AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FDDFC0D-2970-48E1-9EF5-0879EE73F6AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FDDFC0D-2970-48E1-9EF5-0879EE73F6AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0D1D5A4A-C7E1-4B92-87DA-E5FC8F544904} = {61289184-772B-4826-B7A0-1249F00A7FDD}
+		{7FDDFC0D-2970-48E1-9EF5-0879EE73F6AB} = {7F819ADD-9958-44B5-AA0E-1812BB9C90C8}
 	EndGlobalSection
 EndGlobal
