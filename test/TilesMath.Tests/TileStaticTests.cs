@@ -63,7 +63,7 @@ public class TileStaticTests
     }
 
     [Fact]
-    public void Tile_BetweenLine_WhenLineVertical_OneTileHop_ShouldEnumerateTwoTiles()
+    public void Tile_BetweenLine_WhenLineVertical_OneTileHopDown_ShouldEnumerateTwoTiles()
     {
         var tiles = Tile.BelowLine(new (double longitude, double latitude)[]
         {
@@ -80,6 +80,26 @@ public class TileStaticTests
         Assert.Equal(14, tiles[1].Zoom);
         Assert.Equal(8410, tiles[1].X);
         Assert.Equal(5465, tiles[1].Y);
+    }
+
+    [Fact]
+    public void Tile_BetweenLine_WhenLineVertical_OneTileHopUp_ShouldEnumerateTwoTiles()
+    {
+        var tiles = Tile.BelowLine(new (double longitude, double latitude)[]
+        {
+            (4.802056351009384,
+                51.267307188009435),
+            (4.802056351009384,
+                51.257307188009435)
+        }, 14).ToList();
+
+        Assert.Equal(2, tiles.Count);
+        Assert.Equal(14, tiles[0].Zoom);
+        Assert.Equal(8410, tiles[0].X);
+        Assert.Equal(5465, tiles[0].Y);
+        Assert.Equal(14, tiles[1].Zoom);
+        Assert.Equal(8410, tiles[1].X);
+        Assert.Equal(5466, tiles[1].Y);
     }
 
     [Fact]
