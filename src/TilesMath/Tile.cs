@@ -72,13 +72,20 @@ public readonly partial struct Tile
     /// </summary>
     public TileChildren Children => new TileChildren(this);
 
-    public IEnumerable<Tile> ChildrenAtZoom(int zoom)
+    /// <summary>
+    /// Enumerates the children at the given zoom level.
+    /// </summary>
+    /// <param name="zoom">The zoom to enumerate at.</param>
+    /// <param name="exclude">A callback to exclude children.</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public IEnumerable<Tile> ChildrenAtZoom(int zoom, Func<Tile, bool>? exclude = null)
     {
         if (zoom < this.Zoom) throw new Exception("Cannot calculate sub tiles for a smaller zoom level");
 
         if (zoom == this.Zoom)
         {
-            yield return this;
+            if (exclude == null || !exclude(this)) yield return this;
             yield break;
         }
 
@@ -86,16 +93,18 @@ public readonly partial struct Tile
         {
             foreach (var child in this.Children)
             {
-                yield return child;
+                if (exclude == null || !exclude(child)) yield return child;
             }
             yield break;
         }
 
         foreach (var childOneLevelLess in this.ChildrenAtZoom(zoom - 1))
         {
+            if (exclude != null && !exclude(childOneLevelLess)) continue;
+
             foreach (var child in childOneLevelLess.Children)
             {
-                yield return child;
+                if (exclude == null || !exclude(child)) yield return child;
             }
         }
     }

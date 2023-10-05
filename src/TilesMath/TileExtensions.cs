@@ -6,6 +6,28 @@ namespace TilesMath;
 public static class TileExtensions
 {
     /// <summary>
+    /// Checks if the tile is an ancestor of the given decendant.
+    /// </summary>
+    /// <param name="tile">The potential ancestor.</param>
+    /// <param name="decendant">The potential decendant.</param>
+    /// <returns>True if the given tile is a decendant, false otherwise.</returns>
+    public static bool IsAncestor(this Tile tile, Tile decendant)
+    {
+        if (tile.Zoom >= decendant.Zoom) return false;
+
+        var parent = decendant.Parent;
+        while (parent != null)
+        {
+            if (parent.Value == tile) return true;
+            if (tile.Zoom >= parent.Value.Zoom) return false;
+
+            parent = parent.Value.Parent;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Enumerates all tiles between the top left and bottom right tile.
     /// </summary>
     /// <param name="topLeft">The top left tile.</param>
