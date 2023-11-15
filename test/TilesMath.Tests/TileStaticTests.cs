@@ -153,4 +153,15 @@ public class TileStaticTests
         Assert.Equal(8412, tiles[4].X);
         Assert.Equal(5464, tiles[4].Y);
     }
+
+    [Fact]
+    public void Tile_BelowTile_Regression1()
+    {
+        var tiles = Tile.BelowLine(new (double longitude, double latitude)[]
+        {
+            (-38.342295887706044, -4.0837899501379491),
+            (-38.34228515625, -4.0834527720386173)
+        }, 14).ToList();
+
+    }
 }

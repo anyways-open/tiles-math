@@ -130,66 +130,87 @@ public static class TileExtensions
             yield return tile;
 
             // determine to change x or y.
+            var xDiff = point2Tile.Value.X - tileX;
+            var yDiff = point2Tile.Value.Y - tileY;
 
             // if y at the next x is inside the current tile range (miny, maxy), we step x.
-            if (tileX != point2Tile.Value.X)
+            if (xDiff > 0)
             {
-                if (point2Tile.Value.X > tileX)
+                if (yDiff == 0)
                 {
-                    // try to move right.
-                    var nextLongitude = tile.Boundaries.Right;
-                    var latitude = GetY(nextLongitude);
-
-                    if (latitude <= tile.Boundaries.Top &&
-                        latitude >= tile.Boundaries.Bottom)
-                    {
-                        tileX += 1;
-                        continue;
-                    }
+                    tileX += 1;
+                    continue;
                 }
-                if (point2Tile.Value.X < tileX)
-                {
-                    // try to move left.
-                    var nextLongitude = tile.Boundaries.Left;
-                    var latitude = GetY(nextLongitude);
 
-                    if (latitude <= tile.Boundaries.Top &&
-                        latitude >= tile.Boundaries.Bottom)
-                    {
-                        tileX -= 1;
-                        continue;
-                    }
+                // try to move right.
+                var nextLongitude = tile.Boundaries.Right;
+                var latitude = GetY(nextLongitude);
+
+                if (latitude <= tile.Boundaries.Top &&
+                    latitude >= tile.Boundaries.Bottom)
+                {
+                    tileX += 1;
+                    continue;
+                }
+            }
+            if (xDiff < 0)
+            {
+                if (yDiff == 0)
+                {
+                    tileX -= 1;
+                    continue;
+                }
+
+                // try to move left.
+                var nextLongitude = tile.Boundaries.Left;
+                var latitude = GetY(nextLongitude);
+
+                if (latitude <= tile.Boundaries.Top &&
+                    latitude >= tile.Boundaries.Bottom)
+                {
+                    tileX -= 1;
+                    continue;
                 }
             }
 
             // if x at the next y is inside the current tile range (minx, maxx), we step y.
-            if (tileY != point2Tile.Value.Y)
+            if (yDiff > 0)
             {
-                if (point2Tile.Value.Y > tileY)
+                if (xDiff == 0)
                 {
-                    // try to move down.
-                    var nextLatitude = tile.Boundaries.Bottom;
-                    var longitude = GetX(nextLatitude);
-
-                    if (longitude >= tile.Boundaries.Left &&
-                        longitude <= tile.Boundaries.Right)
-                    {
-                        tileY += 1;
-                        continue;
-                    }
+                    tileY += 1;
+                    continue;
                 }
-                if (point2Tile.Value.Y < tileY)
-                {
-                    // try to move up.
-                    var nextLatitude = tile.Boundaries.Top;
-                    var longitude = GetX(nextLatitude);
 
-                    if (longitude >= tile.Boundaries.Left &&
-                        longitude <= tile.Boundaries.Right)
-                    {
-                        tileY -= 1;
-                        continue;
-                    }
+                // try to move down.
+                var nextLatitude = tile.Boundaries.Bottom;
+                var longitude = GetX(nextLatitude);
+
+                if (longitude >= tile.Boundaries.Left &&
+                    longitude <= tile.Boundaries.Right)
+                {
+                    tileY += 1;
+                    continue;
+                }
+            }
+
+            if (yDiff < 0)
+            {
+                if (xDiff == 0)
+                {
+                    tileY -= 1;
+                    continue;
+                }
+
+                // try to move up.
+                var nextLatitude = tile.Boundaries.Top;
+                var longitude = GetX(nextLatitude);
+
+                if (longitude >= tile.Boundaries.Left &&
+                    longitude <= tile.Boundaries.Right)
+                {
+                    tileY -= 1;
+                    continue;
                 }
             }
         }

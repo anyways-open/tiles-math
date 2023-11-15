@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageVersion>0.0.8</PackageVersion>
+    <PackageVersion>0.0.9</PackageVersion>
     <Title>TilesMath</Title>
     <Authors>ANYWAYS BV</Authors>
     <Description>A tiny library for tiles math.</Description>
