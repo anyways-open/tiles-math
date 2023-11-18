@@ -68,6 +68,26 @@ public readonly partial struct Tile
     }
 
     /// <summary>
+    /// Returns the parent tile at the given zoom.
+    /// </summary>
+    /// <param name="zoom"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public Tile ParentAt(int zoom)
+    {
+        if (zoom < 0)
+            throw new ArgumentOutOfRangeException(nameof(zoom),
+                "Zoom has to be positive");
+        if (zoom == this.Zoom) return this;
+        if (zoom > this.Zoom) throw new ArgumentOutOfRangeException(nameof(zoom),
+            "A parent tile should have a lower zoom");
+
+        var x = this.X >> (this.Zoom - zoom);
+        var y = this.Y >> (this.Zoom - zoom);
+        return Tile.Create(x, y, zoom);
+    }
+
+    /// <summary>
     /// The children.
     /// </summary>
     public TileChildren Children => new TileChildren(this);
