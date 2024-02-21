@@ -129,6 +129,24 @@ public readonly partial struct Tile
         }
     }
 
+    /// <summary>
+    /// Returns the number of children at the given zoom level.
+    /// </summary>
+    /// <param name="zoom">The zoom level.</param>
+    /// <returns></returns>
+    public long ChildrenAtZoomCount(int zoom)
+    {
+        if (zoom < this.Zoom) throw new Exception("Cannot calculate sub tiles for a smaller zoom level");
+
+        if (zoom == this.Zoom)
+        {
+            return 1;
+        }
+
+        var diff = zoom - this.Zoom;
+        return LocalMath.SimplePower(4, diff);
+    }
+
     public bool Equals(Tile other)
     {
         return this.X == other.X && this.Y == other.Y && this.Zoom == other.Zoom;
