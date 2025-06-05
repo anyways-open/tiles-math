@@ -12,7 +12,7 @@ public class TilePixels
         var b = tile.Boundaries;
         _left = b.Left;
         _bottom = b.Bottom;
-        
+
         _latPixelSize = b.HeightLatitude / resolution;
         _lonPixelSize = b.WidthLongitude / resolution;
     }

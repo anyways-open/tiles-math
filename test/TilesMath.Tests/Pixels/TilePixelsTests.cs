@@ -13,7 +13,7 @@ public class TilePixelsTests
         Assert.Equal(tile.Boundaries.Left, left, 6);
         Assert.Equal(tile.Boundaries.Bottom, bottom, 6);
     }
-    
+
     [Fact]
     public void TilePixels_MaxMax_ShouldBeTopRight()
     {
@@ -25,7 +25,7 @@ public class TilePixelsTests
         Assert.Equal(tile.Boundaries.Right, left, 6);
         Assert.Equal(tile.Boundaries.Top, bottom, 6);
     }
-    
+
     [Fact]
     public void TilePixels_HalfHalf_ShouldBeCenter()
     {
@@ -37,7 +37,7 @@ public class TilePixelsTests
         Assert.Equal(tile.Boundaries.CenterLongitude, left, 6);
         Assert.Equal(tile.Boundaries.CenterLatitude, bottom, 6);
     }
-    
+
     [Fact]
     public void TilePixels_HalfLongitude_ShouldBeHalfResolution()
     {
@@ -47,9 +47,9 @@ public class TilePixelsTests
 
         var (x, _) = pixels.PixelFor(tile.Boundaries.CenterLongitude, tile.Boundaries.Top);
 
-        Assert.Equal(512/2, x);
+        Assert.Equal(512 / 2, x);
     }
-    
+
     [Fact]
     public void TilePixels_HalfLatitude_ShouldBeHalfResolution()
     {
@@ -59,6 +59,6 @@ public class TilePixelsTests
 
         var (_, y) = pixels.PixelFor(tile.Boundaries.Left, tile.Boundaries.CenterLatitude);
 
-        Assert.Equal(512/2, y);
+        Assert.Equal(512 / 2, y);
     }
 }
