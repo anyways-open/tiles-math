@@ -89,4 +89,24 @@ public readonly partial struct Tile
     {
         return TileExtensions.EnumerableTilesForLine(line, zoom);
     }
+
+    /// <summary>
+    /// Rounds the coordinate a coordinate close by, can help when caching large sets or coordinates.
+    /// </summary>
+    /// <param name="longitude"></param>
+    /// <param name="latitude"></param>
+    /// <param name="zoom"></param>
+    /// <param name="resolution"></param>
+    /// <returns></returns>
+    public static (double longitude, double latitude) RoundToGrid(double longitude, double latitude, int zoom = 14,
+        int resolution = 1024)
+    {
+        var tile = Tile.TryAtLocation(longitude, latitude, zoom);
+        if (tile == null) return (longitude, latitude);
+
+        var pixels = tile.Value.GetPixels(resolution);
+
+        var (x, y) = pixels.PixelFor(longitude, latitude);
+        return pixels.CoordinatesAt(x, y);
+    }
 }

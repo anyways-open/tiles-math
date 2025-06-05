@@ -42,4 +42,14 @@ public readonly struct TileBounds
     /// The center longitude of the tile.
     /// </summary>
     public double CenterLongitude => (this.Left + this.Right) / 2.0;
+
+    /// <summary>
+    /// The width in longitude.
+    /// </summary>
+    public double WidthLongitude => this.Right - this.Left;
+
+    /// <summary>
+    /// The height in latitude.
+    /// </summary>
+    public double HeightLatitude => this.Top - this.Bottom;
 }

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using TilesMath.Pixels;
 
 namespace TilesMath;
 
@@ -145,6 +146,16 @@ public readonly partial struct Tile
 
         var diff = zoom - this.Zoom;
         return LocalMath.SimplePower(4, diff);
+    }
+
+    /// <summary>
+    /// Returns a tile pixels object.
+    /// </summary>
+    /// <param name="resolution">The resolution.</param>
+    /// <returns></returns>
+    public TilePixels GetPixels(int resolution = 512)
+    {
+        return new TilePixels(this, resolution);
     }
 
     public bool Equals(Tile other)
