@@ -31,7 +31,7 @@ public class TileTreeSet : IEnumerable<Tile>
                 // this is the top level tile that was added.
                 return true;
             }
-            var hasAllChildren = parent.Value.Children.All(x => _tiles.Contains(x));
+            var hasAllChildren = this.HasAllChildren(parent.Value);
             if (!hasAllChildren)
             {
                 // tile was added and it is now a new leaf.
@@ -40,12 +40,52 @@ public class TileTreeSet : IEnumerable<Tile>
             else
             {
                 // remove all the children, the leaf will cover them.
-                _tiles.ExceptWith(parent.Value.Children);
+                this.RemoveChildren(parent.Value);
 
                 // the parent needs to be added.
                 tile = parent.Value;
             }
         }
+    }
+
+    /// <summary>
+    /// Checks if all four children of the given tile are in the set.
+    /// </summary>
+    /// <remarks>
+    /// Deliberately not written as Children.All(x => _tiles.Contains(x)). TileChildren is a struct
+    /// with an iterator-based enumerator, so the LINQ version boxes it, allocates the iterator state
+    /// machine and allocates a closure for the predicate, every time, before it can short-circuit.
+    /// Add calls this once per tile on sets holding millions of them, so it is written to allocate
+    /// nothing and to bail on the first missing child, which is by far the common case.
+    /// </remarks>
+    private bool HasAllChildren(Tile tile)
+    {
+        var x = tile.X * 2;
+        var y = tile.Y * 2;
+        var zoom = tile.Zoom + 1;
+
+        return _tiles.Contains(Tile.Create(x, y, zoom)) &&
+               _tiles.Contains(Tile.Create(x + 1, y, zoom)) &&
+               _tiles.Contains(Tile.Create(x + 1, y + 1, zoom)) &&
+               _tiles.Contains(Tile.Create(x, y + 1, zoom));
+    }
+
+    /// <summary>
+    /// Removes all four children of the given tile from the set.
+    /// </summary>
+    /// <remarks>
+    /// The allocation-free counterpart of ExceptWith(tile.Children), see <see cref="HasAllChildren"/>.
+    /// </remarks>
+    private void RemoveChildren(Tile tile)
+    {
+        var x = tile.X * 2;
+        var y = tile.Y * 2;
+        var zoom = tile.Zoom + 1;
+
+        _tiles.Remove(Tile.Create(x, y, zoom));
+        _tiles.Remove(Tile.Create(x + 1, y, zoom));
+        _tiles.Remove(Tile.Create(x + 1, y + 1, zoom));
+        _tiles.Remove(Tile.Create(x, y + 1, zoom));
     }
 
     /// <summary>

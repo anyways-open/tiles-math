@@ -61,4 +61,29 @@ public class TileTests
         Assert.Equal((int)Math.Pow(4, 14), tile.ChildrenAtZoomCount(14));
         Assert.Equal((int)Math.Pow(4, 5), tile.ChildrenAtZoomCount(5));
     }
+
+    [Fact]
+    public void Tile_DefaultEqualityComparer_ShouldNotAllocate()
+    {
+        // a struct that does not implement IEquatable<T> gets the object-based default comparer,
+        // which boxes an argument on every comparison. Tiles are hash keys, so this guards the
+        // IEquatable<Tile> implementation against being dropped again.
+        var comparer = EqualityComparer<Tile>.Default;
+        var tile = Tile.Create(1025, 4511, 14);
+        var same = Tile.Create(1025, 4511, 14);
+        var other = Tile.Create(1025, 4512, 14);
+
+        Assert.True(comparer.Equals(tile, same));
+        Assert.False(comparer.Equals(tile, other));
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        for (var i = 0; i < 1000; i++)
+        {
+            comparer.Equals(tile, same);
+            comparer.Equals(tile, other);
+        }
+        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        Assert.Equal(0, allocated);
+    }
 }

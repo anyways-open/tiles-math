@@ -6,7 +6,13 @@ namespace TilesMath;
 /// <summary>
 /// Represents a tile.
 /// </summary>
-public readonly partial struct Tile
+/// <remarks>
+/// Implements <see cref="IEquatable{T}"/> deliberately: without it EqualityComparer&lt;Tile&gt;.Default
+/// falls back to the object-based comparer, which boxes an argument on every single comparison. Tiles
+/// are used as hash keys in <see cref="Collections.TileTreeSet"/> and by consumers holding millions of
+/// them, so that boxing is not something we can afford.
+/// </remarks>
+public readonly partial struct Tile : IEquatable<Tile>
 {
     private Tile(int x, int y, byte zoom)
     {
